@@ -1,0 +1,18 @@
+---
+import BookingBar from "@components/Landing/BookingBar.astro";
+import Newsletter from "@components/Landing/Newsletter.astro";
+import Offers from "@components/Landing/Offers.astro";
+import PageHero from "@components/Landing/PageHero.astro";
+import hero from "@images/landing/life-balcony-wine.jpg";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Offers & Packages | The Landing Resort & Spa, South Lake Tahoe"
+  description="Lake Tahoe resort packages and specials: book direct for a $50 daily credit, stay longer and save up to 20%, midweek and local resident rates, and stay-and-dine credits."
+>
+  <PageHero image={hero} alt="Two guests with wine on a balcony overlooking Lake Tahoe" eyebrow="<b>Offers</b> &nbsp;·&nbsp; Best rate when you book direct" title="Tahoe is calling." sub="Make the most of your next getaway, and save on extending it." />
+  <BookingBar />
+  <Offers headline="Every current offer." />
+  <Newsletter />
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import BookingBar from "@components/Landing/BookingBar.astro";
+import Dine from "@components/Landing/Dine.astro";
+import FieldNotes from "@components/Landing/FieldNotes.astro";
+import Gather from "@components/Landing/Gather.astro";
+import Hero from "@components/Landing/Hero.astro";
+import Intro from "@components/Landing/Intro.astro";
+import Location from "@components/Landing/Location.astro";
+import Newsletter from "@components/Landing/Newsletter.astro";
+import Offers from "@components/Landing/Offers.astro";
+import Play from "@components/Landing/Play.astro";
+import Reviews from "@components/Landing/Reviews.astro";
+import Rooms from "@components/Landing/Rooms.astro";
+import Spa from "@components/Landing/Spa.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getTranslatedData } from "@js/translationUtils";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const siteData = getTranslatedData("siteData", currLocale);
+---
+
+<BaseLayout title={siteData.title} description={siteData.description}>
+  <Hero />
+  <BookingBar />
+  <FieldNotes />
+  <Intro />
+  <Rooms />
+  <Offers limit={4} />
+  <Dine />
+  <Spa />
+  <Play />
+  <Gather />
+  <Reviews />
+  <Location />
+  <Newsletter />
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import { reviews } from "@config/en/landingData";
+---
+
+<section class="section reviews" aria-labelledby="reviews-h">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Guests</p>
+      <div class="row">
+        <h2 id="reviews-h">What our guests are saying.</h2>
+        <span class="award"><span class="mono">Tripadvisor</span> Travellers' Choice 2025</span>
+      </div>
+    </div>
+    <div class="quotes reveal">
+      {reviews.map((r) => (
+        <div class="quote">
+          <blockquote>“{r.text}”</blockquote>
+          <div class="src"><span class="stars" aria-label="5 of 5">★★★★★</span><span>{r.source}</span></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

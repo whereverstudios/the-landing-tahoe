@@ -1,0 +1,63 @@
+---
+import SiteLogo from "@components/SiteLogo/SiteLogo.astro";
+import { url } from "@js/paths";
+
+const today = new Date();
+---
+
+<footer class="footer">
+  <div class="site-container">
+    <div class="cols">
+      <div>
+        <SiteLogo />
+        <p class="mt-4 max-w-[34ch]">
+          4104 Lakeshore Blvd<br />South Lake Tahoe, CA 96150<br />
+          <a href="tel:+18557005263">855.700.5263</a>
+        </p>
+        <p class="mt-3">
+          <a href="https://www.instagram.com/thelandingresortandspa" rel="noopener" target="_blank">Instagram</a>
+          &nbsp;·&nbsp;
+          <a href="https://www.facebook.com/TheLandingTahoe/" rel="noopener" target="_blank">Facebook</a>
+        </p>
+      </div>
+      <div>
+        <h4>Resort</h4>
+        <ul>
+          <li><a href={url("/stay/")}>Rooms &amp; suites</a></li>
+          <li><a href={url("/dine/")}>Lakeside Dining</a></li>
+          <li><a href={url("/spa/")}>The Spa</a></li>
+          <li><a href={url("/stay/#amenities")}>Amenities</a></li>
+          <li><a href="https://www.thelandingtahoe.com/gallery/" rel="noopener">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Plan</h4>
+        <ul>
+          <li><a href={url("/offers/")}>Offers</a></li>
+          <li><a href={url("/activities/")}>Activities</a></li>
+          <li><a href={url("/gather/")}>Meetings &amp; weddings</a></li>
+          <li><a href={url("/#location")}>Getting here</a></li>
+          <li><a href={url("/stay/#faq")}>FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Good to know</h4>
+        <div class="fees">
+          <div><span>Check-in / out</span><span class="mono">4 pm / 11 am</span></div>
+          <div><span>Resort fee</span><span class="mono">$65 / day</span></div>
+          <div><span>Self or valet parking</span><span class="mono">$30 / night</span></div>
+          <div><span>Pets</span><span class="mono">$75 / day</span></div>
+          <div><span>Local shuttle</span><span class="mono">Free</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="policies">
+      <span>&copy; {today.getFullYear()} The Landing Resort &amp; Spa</span>
+      <ul>
+        <li><a href={url("/privacy-policy/")}>Privacy</a></li>
+        <li><a href="https://www.thelandingtahoe.com/ada-compliance/" rel="noopener">Accessibility</a></li>
+        <li><a href="https://www.thelandingtahoe.com/site-map/" rel="noopener">Site map</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

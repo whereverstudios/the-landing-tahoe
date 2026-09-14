@@ -1,0 +1,30 @@
+---
+import SeasonToggle from "@components/Nav/SeasonToggle.astro";
+import { activities } from "@config/en/landingData";
+import { url } from "@js/paths";
+import { Image } from "astro:assets";
+---
+
+<section class="section play" id="play" aria-labelledby="play-h">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Play &nbsp;·&nbsp; <b class="season-word" data-summer="Summer on the lake" data-winter="Winter in the Sierra">Summer on the lake</b></p>
+      <div class="row">
+        <h2 id="play-h">Adventure is always in season.</h2>
+        <div class="switch-hint">
+          <span class="eyebrow">Showing</span>
+          <SeasonToggle />
+        </div>
+      </div>
+      <p class="lede">Private beach access, more than 800 trailheads, Heavenly's slopes a shuttle ride away. The concierge team curates seasonal experiences for guests, locals and visitors alike.</p>
+    </div>
+    <div class="play-grid">
+      {activities.map((a) => (
+        <a class="act" data-season={a.season} href={url(a.href)} rel={a.href.startsWith("http") ? "noopener" : undefined}>
+          <Image src={a.image} alt={a.name} widths={[400, 700]} sizes="(max-width: 480px) 100vw, (max-width: 1000px) 50vw, 25vw" loading="lazy" />
+          <div class="cap"><span class="mono">{a.label}</span><h3>{a.name}</h3><p>{a.blurb}</p></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

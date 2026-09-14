@@ -1,0 +1,16 @@
+---
+import { resortAmenities } from "@config/en/landingData";
+---
+
+<section class="section" id="resort-amenities" aria-labelledby="ra-h" style="padding-top:0">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Around the resort</p>
+      <div class="row"><h2 id="ra-h">Everything a stay includes.</h2></div>
+      <p class="lede">The $65 daily resort fee covers the pool and hot tub, Wi-Fi, the fitness center, welcome beverages, the local shuttle, two Lakeside Beach passes a day, priority bicycle rentals and ski services.</p>
+    </div>
+    <ul class="amenities reveal" style="margin-top:0" aria-label="Resort amenities">
+      {resortAmenities.map((a) => <li>{a}</li>)}
+    </ul>
+  </div>
+</section>

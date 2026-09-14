@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://whereverstudios.github.io/the-landing-tahoe/sitemap-index.xml

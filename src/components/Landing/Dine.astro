@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+
+import dineBar from "@images/landing/dine-bar.jpg";
+import dineCouple from "@images/landing/dine-couple.jpg";
+import dineSeafood from "@images/landing/dine-seafood.jpg";
+import dineSteak from "@images/landing/dine-steak.jpg";
+
+import Arrow from "./Arrow.astro";
+---
+
+<section class="section dine" id="dine" aria-labelledby="dine-h">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Dine &nbsp;·&nbsp; <b>Lakeside Dining</b></p>
+      <div class="row"><h2 id="dine-h">Fresh tastes. Fantastic lake views.</h2></div>
+    </div>
+    <div class="dine-grid">
+      <figure class="big reveal"><Image src={dineCouple} alt="Two guests at a window table looking out at Lake Tahoe" widths={[700, 1200, 1600]} sizes="(max-width: 900px) 100vw, 58vw" loading="lazy" /></figure>
+      <div class="copy reveal">
+        <div class="prose lede">
+          <p>California-inspired cooking on the shoreline, led by a classically trained chef: the freshest seafood, seasonal vegetables and thoughtfully sourced local ingredients, with specials that follow the season.</p>
+          <p>The dining room flows out to a fire-pit patio at the water's edge. In summer the Rooftop Terrace opens for drinks with a panoramic view. In winter, dinner moves indoors beside the onyx bar.</p>
+        </div>
+        <ul class="menu-list" aria-label="Bar and wine highlights">
+          <li><span>Wine vault, classic and rare Mediterranean and Californian labels</span><span class="mono">1,500 bottles</span></li>
+          <li><span>Scratch bar program at the granite and onyx bar</span><span class="mono">100 spirits</span></li>
+          <li><span>Local brews on tap</span><span class="mono">Rotating</span></li>
+          <li><span>Lakeview patio with fire pits</span><span class="mono">Summer – early fall</span></li>
+          <li><span>Rooftop Terrace</span><span class="mono">Summer</span></li>
+        </ul>
+        <div class="actions">
+          <a class="button button--outline" href="https://www.thelandingtahoe.com/dine/lakeside-dining/" rel="noopener">View menus</a>
+          <a class="textlink" href="https://www.thelandingtahoe.com/dine/lakeside-dining-private-dining/" rel="noopener">Private dining <Arrow /></a>
+        </div>
+      </div>
+      <div class="pair reveal">
+        <Image src={dineSeafood} alt="Seafood plate at Lakeside Dining" widths={[400, 800]} sizes="(max-width: 900px) 50vw, 28vw" loading="lazy" />
+        <Image src={dineSteak} alt="Steak with cocktails at Lakeside Dining" widths={[400, 800]} sizes="(max-width: 900px) 50vw, 28vw" loading="lazy" />
+      </div>
+      <figure class="side reveal"><Image src={dineBar} alt="The granite and onyx bar at Lakeside Dining" widths={[500, 900, 1300]} sizes="(max-width: 900px) 100vw, 40vw" loading="lazy" /></figure>
+    </div>
+  </div>
+</section>

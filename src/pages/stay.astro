@@ -1,0 +1,25 @@
+---
+import Amenities from "@components/Landing/Amenities.astro";
+import BookingBar from "@components/Landing/BookingBar.astro";
+import Faq from "@components/Landing/Faq.astro";
+import Newsletter from "@components/Landing/Newsletter.astro";
+import Offers from "@components/Landing/Offers.astro";
+import PageHero from "@components/Landing/PageHero.astro";
+import Rooms from "@components/Landing/Rooms.astro";
+import { stayFaq } from "@config/en/landingData";
+import hero from "@images/landing/room-lakeview.jpg";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Rooms & Suites | The Landing Resort & Spa, South Lake Tahoe"
+  description="82 newly renovated lakefront rooms and suites with stone gas fireplaces, heated bathroom floors and private balconies on Lake Tahoe's south shore."
+>
+  <PageHero image={hero} alt="Lakeview room with the lake through the window" eyebrow="<b>Stay</b> &nbsp;·&nbsp; 82 rooms &amp; suites &nbsp;·&nbsp; Newly renovated" title="Rooms with a fireplace, a balcony and the lake." sub="Part sanctuary, part base camp. Every room has a stone gas fireplace and heated bathroom floors; Premier rooms and suites add a bathtub and a private balcony." />
+  <BookingBar />
+  <Rooms full />
+  <Amenities />
+  <Offers limit={4} headline="Offers worth building a stay around." />
+  <Faq items={stayFaq} />
+  <Newsletter />
+</BaseLayout>

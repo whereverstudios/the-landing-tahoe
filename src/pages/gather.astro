@@ -1,0 +1,19 @@
+---
+import Faq from "@components/Landing/Faq.astro";
+import Gather from "@components/Landing/Gather.astro";
+import Newsletter from "@components/Landing/Newsletter.astro";
+import PageHero from "@components/Landing/PageHero.astro";
+import { gatherFaq } from "@config/en/landingData";
+import hero from "@images/landing/gather-wedding.jpg";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Meetings & Weddings | The Landing Resort & Spa, South Lake Tahoe"
+  description="Lake Tahoe weddings, meetings and holiday parties at The Landing: the Grand Rooftop Terrace, Lakeside Ballroom and Bijou Boardroom, all with lake views."
+>
+  <PageHero image={hero} alt="A couple kissing at their wedding at The Landing" eyebrow="<b>Gather</b> &nbsp;·&nbsp; Meet &amp; celebrate on the lake" title="A breathtaking backdrop for every occasion." sub="Getting down to business or getting down on the dance floor, with sparkling lake and rugged mountain views and an events team ready to make it a singular success." />
+  <Gather />
+  <Faq items={gatherFaq} title="Planning questions" />
+  <Newsletter />
+</BaseLayout>

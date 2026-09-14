@@ -1,0 +1,54 @@
+---
+import { inRoomAmenities, rooms } from "@config/en/landingData";
+import { url } from "@js/paths";
+import { Image } from "astro:assets";
+
+import Arrow from "./Arrow.astro";
+
+interface Props {
+  /** Home page shows a teaser with a link to /stay/; the stay page shows everything. */
+  full?: boolean;
+}
+const { full = false } = Astro.props;
+---
+
+<section class="section stay" id="stay" aria-labelledby="stay-h">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Stay &nbsp;·&nbsp; <b>Newly renovated</b></p>
+      <div class="row">
+        <h2 id="stay-h">Rooms &amp; suites facing the lake, the garden and the forest.</h2>
+        <div class="rail-nav" aria-label="Scroll rooms">
+          <button type="button" data-rail="-1" aria-label="Previous rooms"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4l-6 6 6 6"></path></svg></button>
+          <button type="button" data-rail="1" aria-label="Next rooms"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4l6 6-6 6"></path></svg></button>
+        </div>
+      </div>
+      <p class="lede">Eighty-two rooms and suites across three floors. Every one has a fireplace; Premier rooms and above add a bathtub and a balcony.</p>
+    </div>
+
+    <div class="rail" id="rail" tabindex="0" aria-label="Room types">
+      {rooms.map((r) => (
+        <article class="room">
+          <Image src={r.image} alt={`${r.name} at The Landing`} widths={[400, 800]} sizes="(max-width: 600px) 78vw, 400px" loading="lazy" />
+          <div class="body">
+            <span class="kind">{r.kind}</span>
+            <h3>{r.name}</h3>
+            <p>{r.blurb}</p>
+            <dl>{r.facts.map((f) => <div><dt>{f.k}</dt><dd>{f.v}</dd></div>)}</dl>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {full ? (
+      <ul class="amenities" id="amenities" aria-label="In-room amenities">
+        {inRoomAmenities.map((a) => <li>{a}</li>)}
+      </ul>
+    ) : (
+      <div class="actions">
+        <a class="button button--secondary" href={url("/stay/")}>All rooms, amenities &amp; policies</a>
+        <a class="textlink" href="#book">Check availability <Arrow /></a>
+      </div>
+    )}
+  </div>
+</section>

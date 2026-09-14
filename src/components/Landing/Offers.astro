@@ -1,0 +1,40 @@
+---
+import { offers } from "@config/en/landingData";
+import { url } from "@js/paths";
+
+import Arrow from "./Arrow.astro";
+
+interface Props {
+  limit?: number;
+  headline?: string;
+}
+const { limit, headline = "Tahoe is calling. Stay longer, pay less." } = Astro.props;
+const list = limit ? offers.slice(0, limit) : offers;
+---
+
+<section class="section" id="offers" aria-labelledby="offers-h">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Offers</p>
+      <div class="row">
+        <h2 id="offers-h">{headline}</h2>
+        {limit && <a class="textlink" href={url("/offers/")}>All offers <Arrow /></a>}
+      </div>
+    </div>
+    <div class="ledger reveal">
+      {list.map((o) => (
+        <a class:list={["offer", { featured: o.featured }]} href={o.href} rel="noopener">
+          <h3>{o.name}</h3>
+          <p>{o.detail}</p>
+          <span class="tag">{o.tag}</span>
+          <span class="val">{o.value}</span>
+        </a>
+      ))}
+    </div>
+    {!limit && (
+      <p class="mt-6 max-w-[62ch] text-sm" style="color: var(--muted-text)">
+        Offers are subject to availability and blackout dates, and cannot be combined unless stated. Resort credits are applied per day of the qualifying stay and cannot be exchanged for cash.
+      </p>
+    )}
+  </div>
+</section>

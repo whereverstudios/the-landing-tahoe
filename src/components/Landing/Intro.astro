@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+
+import building from "@images/landing/building.jpg";
+---
+
+<section class="section" aria-labelledby="about-h">
+  <div class="site-container intro">
+    <div class="reveal">
+      <p class="eyebrow">The resort</p>
+      <h2 id="about-h">Alpine luxury, at the edge of the water.</h2>
+      <div class="prose lede">
+        <p>The Landing sits on the south shore with the lake in front and the Sierra behind. Rooms have stone gas fireplaces, heated bathroom floors and private balconies. Lakeside Beach is steps away, and the free shuttle covers town.</p>
+        <p>Edge-of-your-seat watersports and ski days when you want them. A quiet spa, a heated outdoor pool and a rooftop deck when you don't. Fresh California cooking and a 1,500-bottle wine vault either way.</p>
+      </div>
+      <ul class="steps" aria-label="What is close by">
+        <li><span>Lakeside Beach &amp; Marina</span><span class="mono">steps away</span></li>
+        <li><span>Heavenly Village &amp; gondola</span><span class="mono">3 blocks</span></li>
+        <li><span>Stateline casinos &amp; Tahoe Blue Event Center</span><span class="mono">≈ ½ mi</span></li>
+        <li><span>Emerald Bay</span><span class="mono">≈ 12 mi</span></li>
+      </ul>
+    </div>
+    <figure class="reveal">
+      <Image src={building} alt="Exterior of The Landing Resort and Spa at dusk" widths={[600, 1000, 1400]} sizes="(max-width: 860px) 100vw, 40vw" />
+      <figcaption><span class="mono">In-room</span>Stone gas fireplace, heated bathroom floor, Lavazza espresso, 55-inch TV, terry robes, European rain shower.</figcaption>
+    </figure>
+  </div>
+</section>

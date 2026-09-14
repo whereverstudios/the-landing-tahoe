@@ -1,0 +1,18 @@
+---
+import { url } from "@js/paths";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found" description="Error 404 page not found." noindex={true}>
+  <section class="section">
+    <div class="site-container">
+      <p class="eyebrow">404</p>
+      <h1 class="my-4 max-w-[14ch]">This trail doesn't go anywhere.</h1>
+      <p class="lede prose">The page you were looking for isn't here. The lake still is.</p>
+      <div class="actions">
+        <a class="button button--secondary" href={url("/")}>Back to the resort</a>
+        <a class="button button--outline" href={url("/#book")}>Check availability</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

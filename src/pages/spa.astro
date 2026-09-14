@@ -1,0 +1,25 @@
+---
+import Newsletter from "@components/Landing/Newsletter.astro";
+import PageHero from "@components/Landing/PageHero.astro";
+import Spa from "@components/Landing/Spa.astro";
+import hero from "@images/landing/spa-hotstone.jpg";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="The Spa | The Landing Resort & Spa, South Lake Tahoe"
+  description="Restorative massages, facials and body treatments with organic botanicals, a couple's room, private steam showers and a heated outdoor pool overlooking Lake Tahoe."
+>
+  <PageHero image={hero} alt="Hot stone massage at The Spa at The Landing" eyebrow="<b>The Spa</b> &nbsp;·&nbsp; Open daily" title="Revitalize your soul." sub="Well-deserved time to yourself, with the lake in view from the heated outdoor pool and hot tub any month of the year." />
+  <Spa />
+  <section class="section" aria-labelledby="pass-h" style="padding-top:0">
+    <div class="site-container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Spa day pass</p>
+        <div class="row"><h2 id="pass-h">Not staying with us? Come for the day.</h2></div>
+        <p class="lede">A day pass opens the lockers, steam showers, outdoor pool, hot tub and fitness center. Passes are purchased at the Spa during operating hours; call the morning of to check availability. Guests must be 18 or older, the $60 fee is waived with any spa service, and blackout dates may apply.</p>
+      </div>
+    </div>
+  </section>
+  <Newsletter />
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+const notes = [
+  { k: "Lake elevation", v: "6,225", u: "ft" },
+  { k: "Max depth", v: "1,645", u: "ft" },
+  { k: "Shoreline", v: "72", u: "mi" },
+  { k: "Rooms & suites", v: "82", u: "" },
+  { k: "Beach passes", v: "2", u: "per day" },
+  { k: "To Heavenly Village", v: "3", u: "blocks" },
+];
+---
+
+<div class="notes" aria-label="Facts about the lake and the resort">
+  <div class="site-container notes-grid">
+    {notes.map((n) => (
+      <div class="note">
+        <div class="k">{n.k}</div>
+        <div class="v">{n.v}{n.u && <small>{n.u}</small>}</div>
+      </div>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,57 @@
+---
+import SiteLogo from "@components/SiteLogo/SiteLogo.astro";
+import ThemeToggle from "@components/ThemeToggle/ThemeToggle.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { isCurrent, url } from "@js/paths";
+import { getTranslatedData } from "@js/translationUtils";
+import { Icon } from "astro-icon/components";
+
+import SeasonToggle from "./SeasonToggle.astro";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const navData = getTranslatedData("navData", currLocale);
+const links = navData.filter((n) => "link" in n) as { text: string; link: string }[];
+const pathname = Astro.url.pathname;
+---
+
+<div class="ribbon">
+  Book direct and receive a <strong>$50 daily resort credit</strong> toward spa or dining.
+  <a href={url("/offers/")}>See the offer</a>
+</div>
+
+<header class="nav" id="top">
+  <div class="site-container nav-inner">
+    <SiteLogo />
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        {
+          links.map((item) => (
+            <li>
+              <a href={url(item.link)} aria-current={isCurrent(pathname, item.link) ? "page" : undefined}>
+                {item.text}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <SeasonToggle />
+    <ThemeToggle class="hidden md:flex" />
+    <a class="button button--primary nav-cta" href={url("/#book")}>Reserve</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <Icon name="tabler/menu-2" class="size-5" aria-hidden="true" />
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu" data-open="false" aria-label="Mobile">
+    <div class="site-container">
+      <ul>
+        {links.map((item) => <li><a href={url(item.link)}>{item.text}</a></li>)}
+        <li><a href={url("/#book")}>Reserve a room</a></li>
+      </ul>
+      <div class="flex items-center justify-between gap-4 pb-4">
+        <SeasonToggle />
+        <ThemeToggle />
+      </div>
+    </div>
+  </nav>
+</header>

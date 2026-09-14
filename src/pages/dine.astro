@@ -1,0 +1,35 @@
+---
+import Dine from "@components/Landing/Dine.astro";
+import Newsletter from "@components/Landing/Newsletter.astro";
+import Offers from "@components/Landing/Offers.astro";
+import PageHero from "@components/Landing/PageHero.astro";
+import hero from "@images/landing/dine-plate.jpg";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Lakeside Dining | The Landing Resort & Spa, South Lake Tahoe"
+  description="California-inspired cuisine on the shore of Lake Tahoe: fresh seafood, a 1,500-bottle wine vault, a granite and onyx bar, fire-pit patio and summer Rooftop Terrace."
+>
+  <PageHero image={hero} alt="A plated dish at Lakeside Dining" eyebrow="<b>Dine</b> &nbsp;·&nbsp; Lakeside Dining" title="Dinner at the edge of the water." sub="An intimate waterfront restaurant framed by the Sierra Nevada, with a menu that follows the seasons and a wine list you could spend a week with." />
+  <Dine />
+  <section class="section" aria-labelledby="seasons-h">
+    <div class="site-container">
+      <div class="section-head reveal">
+        <p class="eyebrow">A setting that shifts with the seasons</p>
+        <div class="row"><h2 id="seasons-h">Rooftop in summer. Onyx bar in winter.</h2></div>
+      </div>
+      <div class="hours reveal" style="max-width:900px;grid-template-columns:repeat(3,1fr)">
+        <div><div class="k">Summer</div><div class="v">The Rooftop Terrace opens for drinks with a panoramic view. Patio dining runs through summer and into early fall, weather permitting.</div></div>
+        <div><div class="k">Winter</div><div class="v">Dinner moves indoors: banquette seating, layered lighting and the onyx bar wall, with fire pits on the patio for after.</div></div>
+        <div><div class="k">Private dining</div><div class="v">Celebrations, rehearsal dinners and small corporate groups. Ask about the private dining room and the Grand Rooftop Terrace.</div></div>
+      </div>
+      <div class="actions">
+        <a class="button button--secondary" href="https://www.thelandingtahoe.com/dine/lakeside-dining/" rel="noopener">View menus</a>
+        <a class="button button--outline" href="https://www.thelandingtahoe.com/dine/lakeside-dining-private-dining/" rel="noopener">Private dining</a>
+      </div>
+    </div>
+  </section>
+  <Offers limit={4} headline="Stay and dine offers." />
+  <Newsletter />
+</BaseLayout>

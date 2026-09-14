@@ -1,0 +1,19 @@
+/* buttons, 4 variants: "primary" (ember), "secondary" (ink), "outline" (ghost), "ghost" (text) */
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border: 1px solid transparent; border-radius: 2px;
+  font: inherit; font-size: 0.92rem; font-weight: 500; letter-spacing: 0.02em; text-decoration: none;
+  cursor: pointer; white-space: nowrap;
+  transition: background-color 0.18s, color 0.18s, border-color 0.18s;
+  @apply focus:outline-hidden disabled:pointer-events-none;
+}
+.button--primary { background: var(--ember); color: #fff; }
+.button--primary:hover { background: var(--ember-ink); }
+.button--secondary { background: var(--ink); color: var(--ground); }
+.button--secondary:hover { background: var(--cobalt); color: #fff; }
+.button--outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.button--outline:hover { border-color: var(--ink); }
+.button--ghost { background: transparent; color: var(--ink); padding-inline: 8px; }
+.button--ghost:hover { color: var(--cobalt); }
+.button--light { background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.45); backdrop-filter: blur(6px); }
+.button--light:hover { background: rgba(255,255,255,0.26); }

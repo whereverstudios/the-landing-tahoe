@@ -1,0 +1,59 @@
+---
+import "@/styles/global.css";
+
+import Footer from "@components/Footer/Footer.astro";
+import Nav from "@components/Nav/Nav.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import BaseHead from "@layouts/BaseHead.astro";
+import { type CollectionEntry } from "astro:content";
+
+interface Props {
+  type?: "blog" | "general";
+  title: string;
+  description: string;
+  heroImage?: ImageMetadata;
+  authorsData?: CollectionEntry<"authors">[];
+  postFrontmatter?: CollectionEntry<"blog">["data"];
+  noindex?: boolean;
+}
+
+const {
+  type = "general",
+  title,
+  description,
+  heroImage,
+  authorsData,
+  postFrontmatter,
+  noindex = false,
+} = Astro.props as Props;
+
+const currLocale = getLocaleFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={currLocale} transition:animate="fade">
+  <head>
+    <BaseHead
+      type={type}
+      title={title}
+      description={description}
+      image={heroImage ? heroImage : undefined}
+      authors={authorsData ? authorsData : undefined}
+      postFrontmatter={postFrontmatter ? postFrontmatter : undefined}
+      noindex={noindex}
+    />
+  </head>
+  <body id="body" data-season="summer">
+    <div class="min-h-[100lvh]">
+      <Nav />
+      <main id="main">
+        <slot />
+      </main>
+    </div>
+    <Footer />
+
+    <script>
+      import "@js/landing";
+    </script>
+  </body>
+</html>

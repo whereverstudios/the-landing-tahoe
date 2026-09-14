@@ -1,0 +1,39 @@
+---
+import { PHONES } from "@config/en/landingData";
+import { Image } from "astro:assets";
+
+import spaFacial from "@images/landing/spa-facial.jpg";
+import spaPoultice from "@images/landing/spa-poultice.jpg";
+import spaRobes from "@images/landing/spa-robes.jpg";
+---
+
+<section class="section" id="spa" aria-labelledby="spa-h">
+  <div class="site-container spa-grid">
+    <div class="reveal">
+      <p class="eyebrow">The Spa</p>
+      <h2 id="spa-h" class="my-4 mb-6">Revitalize your soul.</h2>
+      <div class="prose lede">
+        <p>Restorative treatments with organic products and natural botanicals, a couple's room, two private steam showers and a relaxation lounge. Then the heated outdoor pool and hot tub with the lake in front of you, any month of the year.</p>
+        <p>The Healing Arts menu brings therapies from around the world that work on structural, physical and energetic alignment.</p>
+      </div>
+      <div class="treatments" aria-label="Treatments">
+        <span>Deep tissue</span><span>Hot stone</span><span>Herbal poultice</span><span>Foot reflexology</span><span>Scalp, neck &amp; shoulder</span><span>Elevation anti-aging facial</span><span>Coffee &amp; coconut body wrap</span>
+      </div>
+      <div class="hours">
+        <div><div class="k">Hours</div><div class="v">Sun – Thu 10 am – 6 pm<br />Fri – Sat 10 am – 8 pm</div></div>
+        <div><div class="k">Book</div><div class="v"><a href={PHONES.spa.href}>{PHONES.spa.display}</a><br />After-hours by request</div></div>
+        <div><div class="k">Spa day pass</div><div class="v">$60, waived with any service. Pool, hot tub, steam showers, lockers, fitness center. 18+.</div></div>
+        <div><div class="k">Fitness</div><div class="v">Fitness center open to all guests, included in the resort fee.</div></div>
+      </div>
+      <div class="actions">
+        <a class="button button--secondary" href="https://www.thelandingtahoe.com/spa/signature-treatments/" rel="noopener">Book a treatment</a>
+        <a class="button button--outline" href="https://www.thelandingtahoe.com/spa/" rel="noopener">Spa menu</a>
+      </div>
+    </div>
+    <div class="photo reveal">
+      <Image src={spaFacial} alt="A facial treatment at The Spa at The Landing" widths={[700, 1200, 1600]} sizes="(max-width: 860px) 100vw, 58vw" loading="lazy" />
+      <Image src={spaRobes} alt="Two guests in robes with coffee overlooking the lake" widths={[400, 800]} sizes="(max-width: 860px) 50vw, 28vw" loading="lazy" />
+      <Image src={spaPoultice} alt="Herbal poultice massage" widths={[400, 800]} sizes="(max-width: 860px) 50vw, 28vw" loading="lazy" />
+    </div>
+  </div>
+</section>

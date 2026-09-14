@@ -1,0 +1,28 @@
+---
+import { BOOKING_URL, PHONES } from "@config/en/landingData";
+---
+
+<div class="site-container book-wrap" id="book">
+  <form class="book" method="get" action={BOOKING_URL} target="_blank" rel="noopener" aria-label="Check availability">
+    <label><span>Check in</span><input type="date" id="startDate" name="startDate" required /></label>
+    <label><span>Check out</span><input type="date" id="endDate" name="endDate" required /></label>
+    <label>
+      <span>Adults</span>
+      <select id="adults" name="adults">
+        <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+      </select>
+    </label>
+    <label>
+      <span>Children</span>
+      <select id="children" name="children">
+        <option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+      </select>
+    </label>
+    <div class="submit"><button class="button button--primary" type="submit">Check availability</button></div>
+  </form>
+  <div class="book-note">
+    <span>Best rate guaranteed when you book direct.</span>
+    <span>Check-in 4:00 pm · Check-out 11:00 am</span>
+    <span>Reservations <a href={PHONES.reservations.href}>{PHONES.reservations.display}</a></span>
+  </div>
+</div>

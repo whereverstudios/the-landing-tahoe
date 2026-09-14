@@ -1,0 +1,32 @@
+---
+import { distances, PHONES } from "@config/en/landingData";
+
+import Arrow from "./Arrow.astro";
+---
+
+<section class="section" id="location" aria-labelledby="loc-h">
+  <div class="site-container loc">
+    <div class="reveal">
+      <p class="eyebrow">Location</p>
+      <h2 id="loc-h" class="my-4 mb-6">On the shore of South Lake Tahoe.</h2>
+      <p class="prose lede">Perfectly positioned on the south shore: steps from the lakefront, moments from outdoor adventure, and a short walk or free shuttle ride from Heavenly Village.</p>
+      <ul class="dist" aria-label="Distances">
+        {distances.map((d) => <li><span>{d.place}</span><span class="mono">{d.d}</span></li>)}
+      </ul>
+      <div class="addr">
+        <div><div class="k">Address</div><div class="v">4104 Lakeshore Blvd<br />South Lake Tahoe, CA 96150</div></div>
+        <div><div class="k">Front desk</div><div class="v"><a href={PHONES.frontDesk.href}>{PHONES.frontDesk.display}</a><br /><a href={PHONES.reservations.href}>{PHONES.reservations.display}</a> reservations</div></div>
+      </div>
+      <div class="actions">
+        <a class="button button--outline" href="https://www.google.com/maps/search/?api=1&query=The+Landing+Resort+%26+Spa+4104+Lakeshore+Blvd+South+Lake+Tahoe" rel="noopener" target="_blank">Open in Maps</a>
+        <a class="textlink" href="https://www.thelandingtahoe.com/map/" rel="noopener">Getting here &amp; getting around <Arrow /></a>
+      </div>
+    </div>
+    <div class="map reveal" aria-hidden="true">
+      <canvas id="topo"></canvas>
+      <span class="water">Lake Tahoe</span>
+      <div class="pin"><span class="lbl">The Landing</span><span class="dot"></span></div>
+      <div class="legend">38.9605° N · 119.9508° W<br />Contour interval 40 ft (illustrative)</div>
+    </div>
+  </div>
+</section>

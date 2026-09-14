@@ -1,0 +1,23 @@
+---
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { url } from "@js/paths";
+import { getTranslatedData } from "@js/translationUtils";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const currLocale = getLocaleFromUrl(Astro.url);
+const siteData = getTranslatedData("siteData", currLocale);
+---
+
+<a class:list={["brand primary-focus", className]} href={url("/")} aria-label="The Landing, Lake Tahoe Resort and Spa, home">
+  <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+    <path d="M3 27 L14 10 L20 19 L25 12 L37 27 Z" fill="currentColor" opacity=".9"></path>
+    <path d="M4 31 H36 M8 35 H32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+  </svg>
+  <span>
+    <span class="name">{siteData.name}</span>
+    <span class="sub">Lake Tahoe Resort &amp; Spa</span>
+  </span>
+</a>

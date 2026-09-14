@@ -1,0 +1,29 @@
+---
+import Newsletter from "@components/Landing/Newsletter.astro";
+import PageHero from "@components/Landing/PageHero.astro";
+import Play from "@components/Landing/Play.astro";
+import hero from "@images/landing/act-kayak.jpg";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Things to Do in South Lake Tahoe | The Landing Resort & Spa"
+  description="Private beach access, watersports, 800+ trailheads, golf and horseback riding in summer; skiing at Heavenly, snowshoeing, snowmobiling and sleigh rides in winter. Seasonal guest experiences curated by the concierge."
+>
+  <PageHero image={hero} alt="A yellow kayak on the clear water of Lake Tahoe" eyebrow="<b>Play</b> &nbsp;·&nbsp; Adventure is always in season" title="Three blocks from town. Steps from the lake." sub="An unbeatable location on the south shore: private beach access, the excitement of Heavenly Village and the casinos, and every kind of outdoor adventure within reach." />
+  <Play />
+  <section class="section" aria-labelledby="exp-h">
+    <div class="site-container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Seasonal guest experiences</p>
+        <div class="row"><h2 id="exp-h">Curated by the concierge team.</h2></div>
+        <p class="lede">Drawing on deep local expertise, the concierge crafts a calendar of seasonal activities that reflect the best of each season, open to resort guests, locals and Tahoe visitors. Landing Live brings music to Lakeview on summer evenings.</p>
+      </div>
+      <div class="actions">
+        <a class="button button--secondary" href="https://www.thelandingtahoe.com/activities/the-landing-lifestyle/" rel="noopener">View events</a>
+        <a class="button button--outline" href="https://www.thelandingtahoe.com/activities/fun-facts/" rel="noopener">Tahoe fun facts</a>
+      </div>
+    </div>
+  </section>
+  <Newsletter />
+</BaseLayout>

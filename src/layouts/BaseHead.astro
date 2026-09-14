@@ -1,0 +1,68 @@
+---
+import Seo from "@components/Seo/Seo.astro";
+import siteSettings from "@config/siteSettings.json";
+import { url } from "@js/paths";
+import { type CollectionEntry } from "astro:content";
+import { ClientRouter } from "astro:transitions";
+
+export interface Props {
+  type?: "blog" | "general" | undefined;
+  title: string;
+  description: string;
+  image?: CollectionEntry<"blog">["data"]["heroImage"];
+  postFrontmatter?: CollectionEntry<"blog">["data"];
+  authors?: CollectionEntry<"authors">[];
+  noindex?: boolean;
+}
+
+const {
+  type = "general",
+  title,
+  description,
+  image,
+  authors,
+  postFrontmatter,
+  noindex = false,
+} = Astro.props as Props;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href={url("/favicon.svg")} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
+<meta name="theme-color" content="#0b2437" />
+
+<meta name="generator" content={Astro.generator} />
+<link rel="sitemap" href={url("/sitemap-index.xml")} />
+
+<!-- Theme setup. Runs early to avoid a flash of the wrong theme. Defaults to the visitor's system preference. -->
+<script is:inline>
+  function initTheme() {
+    let colorTheme = null;
+    try {
+      colorTheme = localStorage.getItem("colorTheme");
+    } catch (e) {}
+    if (!colorTheme) {
+      colorTheme =
+        window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    }
+    document.documentElement.classList.toggle("dark", colorTheme === "dark");
+  }
+  initTheme();
+  document.addEventListener("astro:after-swap", initTheme);
+</script>
+
+<Seo
+  type={type}
+  title={title}
+  description={description}
+  image={image}
+  authors={authors}
+  postFrontmatter={postFrontmatter}
+  noindex={noindex}
+/>
+
+{siteSettings.useViewTransitions && <ClientRouter fallback="none" />}

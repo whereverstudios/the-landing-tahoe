@@ -1,0 +1,45 @@
+---
+import { venues } from "@config/en/landingData";
+import { Image } from "astro:assets";
+
+import Arrow from "./Arrow.astro";
+---
+
+<section class="section" id="gather" aria-labelledby="gather-h">
+  <div class="site-container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Gather</p>
+      <div class="row">
+        <h2 id="gather-h">Meet and celebrate on the lake.</h2>
+        <a class="textlink" href="https://www.thelandingtahoe.com/gather/rfp/" rel="noopener">Request a proposal <Arrow /></a>
+      </div>
+      <p class="lede">Three venues, all with the water in view, and an events team that has done this many times before.</p>
+    </div>
+    <div class="venues reveal">
+      {venues.map((v) => (
+        <article class="venue">
+          <Image src={v.image} alt={v.name} widths={[500, 900]} sizes="(max-width: 860px) 100vw, 33vw" loading="lazy" />
+          <div class="meta"><h3>{v.name}</h3><span class="mono">{v.tag}</span></div>
+          <p>{v.blurb}</p>
+        </article>
+      ))}
+    </div>
+    <div class="gather-types">
+      <div class="reveal">
+        <h3>Weddings</h3>
+        <p>Boutique weddings glowing with the extra touches, with lake activities to entertain everyone who came with you.</p>
+        <a class="textlink" href="https://www.thelandingtahoe.com/gather/weddings/" rel="noopener">Plan your wedding <Arrow /></a>
+      </div>
+      <div class="reveal">
+        <h3>Meetings</h3>
+        <p>Corporate events find a relaxed rhythm here: lake-view venues, honest-to-goodness fun team building and outstanding food.</p>
+        <a class="textlink" href="https://www.thelandingtahoe.com/gather/meetings/" rel="noopener">Make meeting magic <Arrow /></a>
+      </div>
+      <div class="reveal">
+        <h3>Holiday parties</h3>
+        <p>A signature holiday drink, a lively dance floor and a special gift when food and beverage minimums are met.</p>
+        <a class="textlink" href="https://www.thelandingtahoe.com/gather/special-events/" rel="noopener">Celebrate the season <Arrow /></a>
+      </div>
+    </div>
+  </div>
+</section>

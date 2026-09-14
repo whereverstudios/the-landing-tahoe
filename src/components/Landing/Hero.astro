@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+
+import heroSummer from "@images/landing/hero-summer.jpg";
+import heroWinter from "@images/landing/hero-winter.jpg";
+import { url } from "@js/paths";
+---
+
+<section class="hero" aria-label="Welcome">
+  <div class="hero-media">
+    <Image class="summer" src={heroSummer} alt="Cobalt water and pine trees on Lake Tahoe's south shore" widths={[900, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
+    <Image class="winter" src={heroWinter} alt="Snow-covered boulders and pines beside Lake Tahoe" widths={[900, 1400, 2000]} sizes="100vw" loading="lazy" />
+  </div>
+  <div class="site-container hero-inner">
+    <p class="eyebrow"><b>South shore, Lake Tahoe</b> &nbsp;·&nbsp; 6,225 ft &nbsp;·&nbsp; Steps from the water</p>
+    <h1>Steps from the water, in every season.</h1>
+    <p class="sub">
+      <span class="s">A lakefront resort and spa with a semi-private beach, rooftop sunsets and Heavenly Village three blocks away.</span>
+      <span class="w">A lakefront resort and spa with stone fireplaces, heated floors and Heavenly's lifts minutes away by shuttle.</span>
+    </p>
+    <div class="actions">
+      <a class="button button--primary" href="#book">Check availability</a>
+      <a class="button button--light" href={url("/stay/")}>See rooms &amp; suites</a>
+    </div>
+  </div>
+  <div class="hero-meta" aria-hidden="true">38.9605° N, 119.9508° W<br />82 rooms &amp; suites<br />4104 Lakeshore Blvd</div>
+</section>
