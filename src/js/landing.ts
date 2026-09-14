@@ -109,12 +109,30 @@ function initReveal() {
     },
     { rootMargin: "0px 0px -8% 0px" },
   );
+  const pending = new Set<HTMLElement>();
   document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => {
     if (el.getBoundingClientRect().top > window.innerHeight) {
       el.classList.add("pre");
+      pending.add(el);
       io.observe(el);
     }
   });
+  // Safety net: anything scrolled past between frames (fast wheel, keyboard End) is revealed too.
+  let raf = 0;
+  const sweep = () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      pending.forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+          el.classList.remove("pre");
+          io.unobserve(el);
+          pending.delete(el);
+        }
+      });
+      if (pending.size === 0) window.removeEventListener("scroll", sweep);
+    });
+  };
+  window.addEventListener("scroll", sweep, { passive: true });
 }
 
 /** Topographic contours: marching squares over seeded lattice noise. */
