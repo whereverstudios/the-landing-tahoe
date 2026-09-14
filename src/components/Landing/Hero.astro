@@ -9,7 +9,7 @@ import { url } from "@js/paths";
 // Videos load only on wider screens, with motion allowed and no data-saver; the photos stay as posters.
 const videos = {
   summer: { hd: url("/media/hero-summer.mp4"), sd: url("/media/hero-summer-720.mp4") },
-  winter: { hd: url("/media/hero-winter.mp4"), sd: url("/media/hero-winter-720.mp4") },
+  winter: { hd: url("/media/hero-winter-720.mp4"), sd: url("/media/hero-winter-720.mp4") }, // 720p source (Dec 2025 drone reel)
 };
 ---
 
@@ -32,7 +32,7 @@ const videos = {
       <a class="button button--light" href={url("/stay/")}>See rooms &amp; suites</a>
     </div>
   </div>
-  <div class="hero-meta" aria-hidden="true">38.9605° N, 119.9508° W<br />82 rooms &amp; suites<br />4104 Lakeshore Blvd</div>
+  <div class="hero-meta" aria-hidden="true">38.9608° N, 119.9492° W<br />82 rooms &amp; suites<br />4104 Lakeshore Blvd</div>
   <button class="hero-motion" type="button" data-motion-toggle aria-pressed="true" hidden>
     <span class="on">Pause video</span><span class="off">Play video</span>
   </button>

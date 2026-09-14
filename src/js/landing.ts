@@ -142,7 +142,12 @@ function initReveal() {
   window.addEventListener("scroll", sweep, { passive: true });
 }
 
-/** Topographic contours: marching squares over seeded lattice noise. */
+/**
+ * Shoreline map of the south shore around The Landing, drawn to a rough scale
+ * (map width ≈ 1.4 mi, north up). Water to the north, Lakeshore Blvd along the
+ * shore, the CA/NV line and Heavenly Village to the east and south-east, the
+ * Sierra rising to the south. Contours are illustrative, not survey data.
+ */
 function drawTopo(canvas: HTMLCanvasElement) {
   const box = canvas.parentElement!.getBoundingClientRect();
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -153,80 +158,108 @@ function drawTopo(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d")!;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const cs = getComputedStyle(document.documentElement);
-  const line = cs.getPropertyValue("--line-strong").trim() || "#9fb0aa";
-  const cobalt = cs.getPropertyValue("--cobalt").trim() || "#1d5a8e";
-  const surface = cs.getPropertyValue("--surface").trim() || "#fafbfa";
+  const tok = (n: string, fb: string) => cs.getPropertyValue(n).trim() || fb;
+  const line = tok("--line-strong", "#9fb0aa"), cobalt = tok("--cobalt", "#1d5a8e");
+  const surface = tok("--surface", "#fafbfa"), ink = tok("--ink", "#0b2437"), muted = tok("--muted-text", "#5b6e7c");
+  const mono = `${cs.getPropertyValue("--font-mono").trim() || "IBM Plex Mono, monospace"}`;
   ctx.fillStyle = surface;
   ctx.fillRect(0, 0, W, H);
 
+  // Scale: 1.4 miles across. The Landing sits at 45% across, on the shore.
+  const MILE = W / 1.4;
+  const PIN_X = W * 0.45;
+
   let seed = 1897;
-  const rnd = () => {
-    seed = (seed * 16807) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
-  const GN = 9;
-  const lat: number[] = [];
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const GN = 9, lat: number[] = [];
   for (let i = 0; i < GN * GN; i++) lat.push(rnd());
   const sm = (t: number) => t * t * (3 - 2 * t);
   const g = (a: number, b: number) => lat[(((a % GN) + GN) % GN) + (((b % GN) + GN) % GN) * GN];
   const noise = (x: number, y: number) => {
     const xi = Math.floor(x), yi = Math.floor(y), xf = sm(x - xi), yf = sm(y - yi);
-    const v00 = g(xi, yi), v10 = g(xi + 1, yi), v01 = g(xi, yi + 1), v11 = g(xi + 1, yi + 1);
-    return (v00 * (1 - xf) + v10 * xf) * (1 - yf) + (v01 * (1 - xf) + v11 * xf) * yf;
+    return (g(xi, yi) * (1 - xf) + g(xi + 1, yi) * xf) * (1 - yf) + (g(xi, yi + 1) * (1 - xf) + g(xi + 1, yi + 1) * xf) * yf;
   };
-  const cell = 8;
-  const nx = Math.ceil(W / cell) + 1, ny = Math.ceil(H / cell) + 1;
+  // Shoreline runs east–west across the upper part of the map, bowing gently (south shore of the lake).
+  const shoreY = (x: number) => H * 0.40 - Math.cos(((x / W) - 0.5) * Math.PI) * H * 0.06 + noise(x / 120, 3.3) * 10;
+  const PIN_Y = shoreY(PIN_X) + 12;
+
+  // Elevation field: below sea level of the lake north of the shore, rising to the south with texture.
+  const cell = 8, nx = Math.ceil(W / cell) + 1, ny = Math.ceil(H / cell) + 1;
   const f = new Float32Array(nx * ny);
-  for (let y = 0; y < ny; y++) {
-    for (let x = 0; x < nx; x++) {
-      const px = x / nx, py = y / ny;
-      const n = noise(px * 3.2, py * 3.2) * 0.6 + noise(px * 7 + 3, py * 7 + 3) * 0.28 + noise(px * 15 + 9, py * 15 + 9) * 0.12;
-      const basin = Math.exp(-(((px - 0.78) * (px - 0.78)) / 0.06 + ((py - 0.52) * (py - 0.52)) / 0.11));
-      f[y * nx + x] = n * 0.75 + (1 - px) * 0.3 - basin * 0.55;
-    }
+  for (let y = 0; y < ny; y++) for (let x = 0; x < nx; x++) {
+    const px = x * cell, py = y * cell;
+    const d = (py - shoreY(px)) / H; // negative = water
+    const n = noise(px / 160 + 7, py / 160 + 7) * 0.5 + noise(px / 70 + 2, py / 70 + 2) * 0.25;
+    f[y * nx + x] = d < 0 ? d * 1.6 - n * 0.12 : d * 1.35 + n * 0.32 * Math.min(1, d * 4) + Math.max(0, d - 0.45) * 0.9;
   }
-  ctx.lineWidth = 1;
-  ctx.lineJoin = "round";
-  const levels: number[] = [];
-  for (let L = -0.1; L <= 0.95; L += 0.045) levels.push(L);
-  const segTable: Record<number, number[]> = {
-    1: [3, 2], 2: [2, 1], 3: [3, 1], 4: [0, 1], 5: [0, 3, 2, 1], 6: [0, 2], 7: [0, 3],
-    8: [0, 3], 9: [0, 2], 10: [0, 1, 2, 3], 11: [0, 1], 12: [3, 1], 13: [2, 1], 14: [3, 2],
-  };
-  levels.forEach((lv, li) => {
-    ctx.strokeStyle = line;
-    ctx.globalAlpha = li % 5 === 0 ? 0.9 : 0.45;
+  const march = (lv: number) => {
+    const T: Record<number, number[]> = { 1: [3, 2], 2: [2, 1], 3: [3, 1], 4: [0, 1], 5: [0, 3, 2, 1], 6: [0, 2], 7: [0, 3], 8: [0, 3], 9: [0, 2], 10: [0, 1, 2, 3], 11: [0, 1], 12: [3, 1], 13: [2, 1], 14: [3, 2] };
     ctx.beginPath();
-    for (let y = 0; y < ny - 1; y++) {
-      for (let x = 0; x < nx - 1; x++) {
-        const a = f[y * nx + x], b = f[y * nx + x + 1], c = f[(y + 1) * nx + x + 1], d = f[(y + 1) * nx + x];
-        const idx = (a > lv ? 8 : 0) | (b > lv ? 4 : 0) | (c > lv ? 2 : 0) | (d > lv ? 1 : 0);
-        if (idx === 0 || idx === 15) continue;
-        const X = x * cell, Y = y * cell;
-        const lerp = (p: number, q: number, v0: number, v1: number) => p + (q - p) * ((lv - v0) / (v1 - v0));
-        const pts = [
-          [lerp(X, X + cell, a, b), Y],
-          [X + cell, lerp(Y, Y + cell, b, c)],
-          [lerp(X, X + cell, d, c), Y + cell],
-          [X, lerp(Y, Y + cell, a, d)],
-        ];
-        const segs = segTable[idx];
-        for (let s = 0; s < segs.length; s += 2) {
-          ctx.moveTo(pts[segs[s]][0], pts[segs[s]][1]);
-          ctx.lineTo(pts[segs[s + 1]][0], pts[segs[s + 1]][1]);
-        }
-      }
+    for (let y = 0; y < ny - 1; y++) for (let x = 0; x < nx - 1; x++) {
+      const a = f[y * nx + x], b = f[y * nx + x + 1], c = f[(y + 1) * nx + x + 1], d = f[(y + 1) * nx + x];
+      const idx = (a > lv ? 8 : 0) | (b > lv ? 4 : 0) | (c > lv ? 2 : 0) | (d > lv ? 1 : 0);
+      if (idx === 0 || idx === 15) continue;
+      const X = x * cell, Y = y * cell;
+      const L = (p: number, q: number, v0: number, v1: number) => p + (q - p) * ((lv - v0) / (v1 - v0));
+      const pts = [[L(X, X + cell, a, b), Y], [X + cell, L(Y, Y + cell, b, c)], [L(X, X + cell, d, c), Y + cell], [X, L(Y, Y + cell, a, d)]];
+      const sg = T[idx];
+      for (let s = 0; s < sg.length; s += 2) { ctx.moveTo(pts[sg[s]][0], pts[sg[s]][1]); ctx.lineTo(pts[sg[s + 1]][0], pts[sg[s + 1]][1]); }
     }
     ctx.stroke();
-  });
-  ctx.globalAlpha = 0.16;
-  ctx.fillStyle = cobalt;
-  for (let y = 0; y < ny - 1; y++) {
-    for (let x = 0; x < nx - 1; x++) {
-      if (f[y * nx + x] < -0.02) ctx.fillRect(x * cell, y * cell, cell, cell);
-    }
-  }
+  };
+
+  // Water
+  ctx.globalAlpha = 0.14; ctx.fillStyle = cobalt;
+  for (let y = 0; y < ny - 1; y++) for (let x = 0; x < nx - 1; x++) if (f[y * nx + x] < 0) ctx.fillRect(x * cell, y * cell, cell, cell);
+  ctx.globalAlpha = 1; ctx.lineWidth = 1; ctx.lineJoin = "round";
+  // Bathymetry: Tahoe drops off fast, so a few tight lines just offshore.
+  ctx.strokeStyle = cobalt;
+  [-0.07, -0.16, -0.27, -0.4].forEach((lv, i) => { ctx.globalAlpha = i === 0 ? 0.5 : 0.28; march(lv); });
+  // Shoreline
+  ctx.globalAlpha = 0.9; ctx.strokeStyle = cobalt; ctx.lineWidth = 1.5; march(0);
+  // Land contours
+  ctx.lineWidth = 1; ctx.strokeStyle = line;
+  for (let i = 1; i <= 26; i++) { ctx.globalAlpha = i % 5 === 0 ? 0.85 : 0.42; march(i * 0.045); }
   ctx.globalAlpha = 1;
+
+  // Roads: Lakeshore Blvd hugs the shore; US-50 runs east–west further south.
+  const road = (fn: (x: number) => number, dash: number[], alpha: number, w: number) => {
+    ctx.save(); ctx.setLineDash(dash); ctx.strokeStyle = ink; ctx.globalAlpha = alpha; ctx.lineWidth = w; ctx.beginPath();
+    for (let x = 0; x <= W; x += 6) { const y = fn(x); x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+    ctx.stroke(); ctx.restore();
+  };
+  road((x) => shoreY(x) + 26 + Math.sin(x / 140) * 4, [6, 5], 0.55, 1.2);
+  road((x) => shoreY(x) + MILE * 0.28 + Math.sin(x / 220) * 6, [], 0.35, 2);
+  // State line, half a mile east of the resort.
+  const NV_X = PIN_X + MILE * 0.5;
+  ctx.save(); ctx.setLineDash([2, 6]); ctx.strokeStyle = ink; ctx.globalAlpha = 0.6; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(NV_X, 0); ctx.lineTo(NV_X, H); ctx.stroke(); ctx.restore();
+
+  // Labels
+  const label = (t: string, x: number, y: number, align: CanvasTextAlign = "left", color = muted, size = 10) => {
+    ctx.save(); ctx.font = `500 ${size}px ${mono}`; ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = "middle";
+    ctx.letterSpacing = "0.1em"; ctx.fillText(t.toUpperCase(), x, y); ctx.restore();
+  };
+  const dot = (x: number, y: number) => { ctx.fillStyle = ink; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill(); };
+  label("Lake Tahoe", W * 0.5, H * 0.14, "center", cobalt, 11);
+  label("CA", NV_X - 8, H * 0.93, "right"); label("NV", NV_X + 8, H * 0.93, "left");
+  label("Lakeshore Blvd", W * 0.06, shoreY(W * 0.06) + 40);
+  label("US-50", W * 0.06, shoreY(W * 0.06) + MILE * 0.28 + 14);
+  const beachX = PIN_X - MILE * 0.16; dot(beachX, shoreY(beachX) + 6); label("Lakeside Beach & Marina", beachX - 8, shoreY(beachX) - 12, "right");
+  const hvX = PIN_X + MILE * 0.36, hvY = shoreY(hvX) + MILE * 0.26; dot(hvX, hvY); label("Heavenly Village", hvX + 10, hvY);
+  const gX = hvX + MILE * 0.08, gY = hvY + MILE * 0.11; dot(gX, gY); label("Gondola", gX + 10, gY);
+  // North arrow + scale bar
+  ctx.save(); ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.globalAlpha = 0.8; ctx.lineWidth = 1.2;
+  const ax = W - 28, ay = 22; ctx.beginPath(); ctx.moveTo(ax, ay + 22); ctx.lineTo(ax, ay); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ax, ay - 2); ctx.lineTo(ax - 4, ay + 6); ctx.lineTo(ax + 4, ay + 6); ctx.closePath(); ctx.fill();
+  label("N", ax, ay + 34, "center", ink);
+  const sx = W - 28 - MILE * 0.25, sy = H - 18; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + MILE * 0.25, sy); ctx.moveTo(sx, sy - 4); ctx.lineTo(sx, sy + 4); ctx.moveTo(sx + MILE * 0.25, sy - 4); ctx.lineTo(sx + MILE * 0.25, sy + 4); ctx.stroke();
+  label("¼ mile", sx + MILE * 0.125, sy - 12, "center", ink);
+  ctx.restore();
+
+  // Place the HTML pin on the shoreline.
+  const pin = canvas.parentElement!.querySelector<HTMLElement>(".pin");
+  if (pin) { pin.style.left = `${(PIN_X / W) * 100}%`; pin.style.top = `${(PIN_Y / H) * 100}%`; }
 }
 
 let topoCleanup: (() => void) | null = null;
@@ -272,8 +305,8 @@ function syncHeroVideo() {
   }
   if (toggle) toggle.hidden = false;
   media.classList.toggle("video-paused", videoPaused);
-  media.querySelectorAll<HTMLVideoElement>("video[data-season-video]").forEach((v) => {
-    const active = v.getAttribute("data-season-video") === season;
+  media.querySelectorAll<HTMLVideoElement>("video[data-season-video], video[data-page-video]").forEach((v) => {
+    const active = v.hasAttribute("data-page-video") || v.getAttribute("data-season-video") === season;
     v.classList.toggle("is-active", active);
     if (active && !videoPaused) {
       v.muted = true; // the property, not just the attribute: required for autoplay in every browser

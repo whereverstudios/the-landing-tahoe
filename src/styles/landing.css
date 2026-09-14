@@ -47,6 +47,8 @@
 /* Hero */
 .hero { position: relative; min-height: clamp(560px, 78vh, 820px); color: #fff; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; }
 .hero.hero--page { min-height: clamp(380px, 52vh, 560px); }
+.hero.hero--page.hero--video { min-height: clamp(480px, 70vh, 720px); }
+.hero--page .hero-motion { bottom: 24px; margin-top: 0; }
 .hero-media { position: absolute; inset: 0; z-index: -1; background: #0b2437; }
 .hero-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.9s ease; }
 .hero-media img.winter { opacity: 0; }
@@ -221,7 +223,7 @@ body[data-season="summer"] .act[data-season="summer"], body[data-season="winter"
 .loc { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: stretch; }
 .map { position: relative; min-height: 420px; border: 1px solid var(--line); background: var(--surface); overflow: hidden; }
 .map canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.map .pin { position: absolute; left: 56%; top: 44%; transform: translate(-50%, -100%); display: grid; justify-items: center; gap: 6px; }
+.map .pin { position: absolute; left: 45%; top: 42%; transform: translate(-50%, -100%); display: grid; justify-items: center; gap: 6px; }
 .map .pin .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--ember); box-shadow: 0 0 0 6px color-mix(in srgb, var(--ember) 25%, transparent); }
 .map .pin .lbl { background: var(--ink); color: var(--ground); font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 9px; white-space: nowrap; }
 .map .legend { position: absolute; left: 16px; bottom: 14px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-text); line-height: 1.7; }

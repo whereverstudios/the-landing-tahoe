@@ -1,4 +1,5 @@
 ---
+import { url } from "@js/paths";
 import { Image } from "astro:assets";
 
 interface Props {
@@ -7,17 +8,25 @@ interface Props {
   eyebrow: string;
   title: string;
   sub?: string;
+  /** Optional looping footage over the poster image: { hd, sd } paths relative to the site root. */
+  video?: { hd: string; sd: string };
 }
-const { image, alt, eyebrow, title, sub } = Astro.props;
+const { image, alt, eyebrow, title, sub, video } = Astro.props;
 ---
 
-<section class="hero hero--page" aria-label={title}>
+<section class:list={["hero hero--page", { "hero--video": !!video }]} aria-label={title}>
   <div class="hero-media">
     <Image src={image} alt={alt} widths={[900, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
+    {video && <video data-page-video data-src={url(video.hd)} data-src-sd={url(video.sd)} muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"></video>}
   </div>
   <div class="site-container hero-inner">
     <p class="eyebrow" set:html={eyebrow} />
     <h1>{title}</h1>
     {sub && <p class="sub"><span class="s" style="display:inline">{sub}</span></p>}
   </div>
+  {video && (
+    <button class="hero-motion" type="button" data-motion-toggle aria-pressed="true" hidden>
+      <span class="on">Pause video</span><span class="off">Play video</span>
+    </button>
+  )}
 </section>
