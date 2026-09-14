@@ -1,0 +1,29 @@
+---
+/**
+ * Live conditions for Stateline / South Lake Tahoe from Open-Meteo (no key needed).
+ * Filled in by initConditions() in src/js/landing.ts. Renders a quiet placeholder until data arrives.
+ */
+---
+
+<section class="conditions" id="conditions" aria-labelledby="cond-h" data-lat="38.9605" data-lon="-119.9508">
+  <div class="site-container">
+    <div class="cond-head">
+      <p class="eyebrow"><b>Conditions at the lake</b> &nbsp;·&nbsp; Stateline, NV &nbsp;·&nbsp; <span data-cond="updated">checking…</span></p>
+      <h2 id="cond-h" class="sr-only">Current weather at The Landing</h2>
+      <p class="cond-sun mono"><span data-cond="sunline">Sunrise and sunset times load with the forecast.</span></p>
+    </div>
+    <div class="cond-grid">
+      <div class="cond-now">
+        <div class="cond-temp"><span data-cond="temp">--</span><small>°F</small></div>
+        <div class="cond-desc"><span class="cond-icon" data-cond="icon"></span><span data-cond="desc">Loading the forecast</span></div>
+        <dl class="cond-facts">
+          <div><dt>Feels like</dt><dd><span data-cond="feels">--</span>°</dd></div>
+          <div><dt>Wind</dt><dd><span data-cond="wind">--</span> mph</dd></div>
+          <div><dt>Snow on the ground</dt><dd data-cond="snow">--</dd></div>
+        </dl>
+      </div>
+      <ol class="cond-days" data-cond="days" aria-label="Next three days"></ol>
+    </div>
+    <p class="cond-foot">Forecast for the lake at 6,225 ft. Heavenly's summit sits 4,000 ft higher and runs colder. Data: Open-Meteo.</p>
+  </div>
+</section>

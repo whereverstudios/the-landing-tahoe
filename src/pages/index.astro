@@ -1,5 +1,6 @@
 ---
 import BookingBar from "@components/Landing/BookingBar.astro";
+import Conditions from "@components/Landing/Conditions.astro";
 import Dine from "@components/Landing/Dine.astro";
 import FieldNotes from "@components/Landing/FieldNotes.astro";
 import Gather from "@components/Landing/Gather.astro";
@@ -33,5 +34,6 @@ const siteData = getTranslatedData("siteData", currLocale);
   <Gather />
   <Reviews />
   <Location />
+  <Conditions />
   <Newsletter />
 </BaseLayout>

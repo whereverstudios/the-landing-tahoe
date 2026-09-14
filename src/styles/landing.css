@@ -279,3 +279,41 @@ body[data-season="summer"] .act[data-season="summer"], body[data-season="winter"
   .hero-media img { transition: none; }
   .act img { transition: none; }
 }
+
+/* Hero video */
+.hero-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; pointer-events: none; }
+.hero-media video.is-ready.is-active { opacity: 1; }
+.hero-media.video-paused video { opacity: 0; }
+.hero-motion { position: absolute; right: clamp(16px, 4vw, 48px); bottom: clamp(110px, 15vw, 160px); z-index: 2; margin-top: 76px; background: rgba(6,20,32,0.45); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.72rem; letter-spacing: 0.06em; cursor: pointer; backdrop-filter: blur(6px); }
+.hero-motion:hover { background: rgba(6,20,32,0.7); color: #fff; }
+.hero-motion .off { display: none; }
+.hero-motion[aria-pressed="false"] .on { display: none; }
+.hero-motion[aria-pressed="false"] .off { display: inline; }
+@media (min-width: 1100px) { .hero-motion { bottom: calc(clamp(110px, 15vw, 160px) - 44px); } }
+
+/* Conditions strip */
+.conditions { background: var(--surface); border-top: 1px solid var(--line); padding-block: clamp(40px, 5vw, 64px); }
+.cond-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; margin-bottom: 24px; }
+.cond-sun { font-size: 0.78rem; color: var(--muted-text); letter-spacing: 0.04em; margin: 0; }
+.cond-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); align-items: stretch; border-top: 1px solid var(--ink); }
+.cond-now { padding-top: 20px; display: grid; gap: 14px; align-content: start; }
+.cond-temp { font-family: var(--font-display); font-size: clamp(3.6rem, 7vw, 5.4rem); line-height: 0.95; font-variant-numeric: tabular-nums; }
+.cond-temp small { font-family: var(--font-mono); font-size: 1rem; color: var(--muted-text); margin-left: 6px; vertical-align: super; }
+.cond-desc { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+.cond-icon svg { width: 26px; height: 26px; display: block; color: var(--cobalt); }
+.cond-facts { display: grid; grid-template-columns: repeat(3, auto); gap: 0 24px; margin: 6px 0 0; border-top: 1px solid var(--line); padding-top: 12px; }
+.cond-facts dt { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-text); }
+.cond-facts dd { margin: 3px 0 0; font-size: 0.95rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.cond-days { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+.cond-days li { padding: 20px 18px 18px 0; border-right: 1px solid var(--line); margin-right: 18px; display: grid; gap: 6px; align-content: start; }
+.cond-days li:last-child { border-right: 0; margin-right: 0; }
+.cond-days .d { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-text); }
+.cond-days .hi { font-family: var(--font-display); font-size: 1.8rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.cond-days .hi small { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted-text); margin-left: 6px; }
+.cond-days .w { font-size: 0.88rem; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
+.cond-days .w svg { width: 18px; height: 18px; color: var(--cobalt); flex: none; }
+.cond-days .sn { font-family: var(--font-mono); font-size: 0.7rem; color: var(--cobalt); }
+.cond-foot { margin-top: 18px; font-size: 0.78rem; color: var(--muted-text); max-width: 70ch; }
+.conditions[data-state="error"] .cond-grid, .conditions[data-state="error"] .cond-sun { display: none; }
+@media (max-width: 860px) { .cond-grid { grid-template-columns: 1fr; } .cond-days { border-top: 1px solid var(--line); } .cond-facts { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .cond-days { grid-template-columns: 1fr; } .cond-days li { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--line); padding-right: 0; } .cond-days li:last-child { border-bottom: 0; } }

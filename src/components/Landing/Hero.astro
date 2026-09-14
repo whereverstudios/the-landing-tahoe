@@ -4,12 +4,21 @@ import { Image } from "astro:assets";
 import heroSummer from "@images/landing/hero-summer.jpg";
 import heroWinter from "@images/landing/hero-winter.jpg";
 import { url } from "@js/paths";
+
+// Real footage: summer is an aerial over a south-shore cove; winter is a DJI sunset over the lake.
+// Videos load only on wider screens, with motion allowed and no data-saver; the photos stay as posters.
+const videos = {
+  summer: { hd: url("/media/hero-summer.mp4"), sd: url("/media/hero-summer-720.mp4") },
+  winter: { hd: url("/media/hero-winter.mp4"), sd: url("/media/hero-winter-720.mp4") },
+};
 ---
 
 <section class="hero" aria-label="Welcome">
   <div class="hero-media">
     <Image class="summer" src={heroSummer} alt="Cobalt water and pine trees on Lake Tahoe's south shore" widths={[900, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
     <Image class="winter" src={heroWinter} alt="Snow-covered boulders and pines beside Lake Tahoe" widths={[900, 1400, 2000]} sizes="100vw" loading="lazy" />
+    <video class="summer" data-season-video="summer" data-src={videos.summer.hd} data-src-sd={videos.summer.sd} muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"></video>
+    <video class="winter" data-season-video="winter" data-src={videos.winter.hd} data-src-sd={videos.winter.sd} muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"></video>
   </div>
   <div class="site-container hero-inner">
     <p class="eyebrow"><b>South shore, Lake Tahoe</b> &nbsp;·&nbsp; 6,225 ft &nbsp;·&nbsp; Steps from the water</p>
@@ -24,4 +33,7 @@ import { url } from "@js/paths";
     </div>
   </div>
   <div class="hero-meta" aria-hidden="true">38.9605° N, 119.9508° W<br />82 rooms &amp; suites<br />4104 Lakeshore Blvd</div>
+  <button class="hero-motion" type="button" data-motion-toggle aria-pressed="true" hidden>
+    <span class="on">Pause video</span><span class="off">Play video</span>
+  </button>
 </section>

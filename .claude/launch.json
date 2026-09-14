@@ -4,8 +4,27 @@
     {
       "name": "Astro Dev",
       "runtimeExecutable": "/usr/local/bin/node",
-      "runtimeArgs": ["/usr/local/lib/node_modules/npm/bin/npm-cli.js", "run", "dev"],
+      "runtimeArgs": [
+        "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "dev"
+      ],
       "port": 4321
+    },
+    {
+      "name": "Landing Dev",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": [
+        "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "4323",
+        "--host",
+        "127.0.0.1"
+      ],
+      "port": 4323
     }
   ]
 }
