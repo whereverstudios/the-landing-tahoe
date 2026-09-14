@@ -20,10 +20,10 @@
 .ribbon { background: #071825; color: #dce6ee; font-size: 0.82rem; text-align: center; padding: 8px 16px; }
 .ribbon a { color: #fff; }
 .nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--ground) 86%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
-.nav-inner { display: flex; align-items: center; gap: 28px; min-height: 72px; }
+.nav-inner { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); min-height: 72px; }
 .brand { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 12px; margin-right: auto; }
 .brand svg { width: 34px; height: 34px; flex: none; }
-.brand .name { font-family: var(--font-display); font-size: 1.35rem; line-height: 1; letter-spacing: 0.01em; display: block; }
+.brand .name { font-family: var(--font-display); font-size: 1.35rem; line-height: 1; letter-spacing: 0.01em; display: block; white-space: nowrap; }
 .brand .sub { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-text); margin-top: 4px; display: block; }
 .nav-links { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
 .nav-links a { color: var(--ink-2); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
